@@ -201,4 +201,4 @@ echo ""
 echo "  Starting Matrix now..."
 echo ""
 
-exec "$VENV_DIR/bin/python" "$INSTALL_DIR/main.py"
+exec "$VENV_DIR/bin/python" "$INSTALL_DIR/main.py" </dev/tty
