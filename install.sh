@@ -16,12 +16,12 @@ INSTALL_DIR="${MATRIX_HOME:-$HOME/.matrix}"
 MODEL="${MATRIX_MODEL:-gemma4:latest}"
 VENV_DIR="$INSTALL_DIR/.venv"
 
-# Colors
-RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; NC='\033[0m'
-ok()   { echo -e "  ${GREEN}[ok]${NC}    $*"; }
-info() { echo -e "  ${CYAN}[setup]${NC} $*"; }
-warn() { echo -e "  ${YELLOW}[warn]${NC}  $*"; }
-die()  { echo -e "  ${RED}[error]${NC} $*" >&2; exit 1; }
+# Colors (use printf — echo -e is not portable across sh/bash/zsh)
+GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; RED='\033[0;31m'; NC='\033[0m'
+ok()   { printf "  ${GREEN}[ok]${NC}    %s\n" "$*"; }
+info() { printf "  ${CYAN}[setup]${NC} %s\n" "$*"; }
+warn() { printf "  ${YELLOW}[warn]${NC}  %s\n" "$*"; }
+die()  { printf "  ${RED}[error]${NC} %s\n" "$*" >&2; exit 1; }
 
 # ── Banner ─────────────────────────────────────────────────────────────────────
 echo ""
@@ -201,4 +201,5 @@ echo ""
 echo "  Starting Matrix now..."
 echo ""
 
-exec "$VENV_DIR/bin/python" "$INSTALL_DIR/main.py" </dev/tty
+exec < /dev/tty
+exec "$VENV_DIR/bin/python" "$INSTALL_DIR/main.py"

@@ -7,6 +7,14 @@ import os
 import sys
 from pathlib import Path
 
+# When launched via `curl | sh` the shell's stdin is the pipe, not the
+# terminal. Re-open /dev/tty so the user can actually type.
+if not sys.stdin.isatty():
+    try:
+        sys.stdin = open("/dev/tty", "r")
+    except OSError:
+        pass  # No terminal available (CI, etc.) — let it fail naturally
+
 # Ensure the project root is on sys.path
 sys.path.insert(0, str(Path(__file__).parent))
 
