@@ -209,7 +209,13 @@ echo ""
 step "Starting Matrix now..."
 echo ""
 
-# NOTE: do NOT use 'exec < /dev/tty' here — when this script is piped from
-# curl, that would redirect the shell's stdin away from the pipe and hang.
-# The Python process handles /dev/tty itself (see main.py).
-"$VENV_DIR/bin/python" "$INSTALL_DIR/main.py"
+# When piped from curl, sh's stdin is the pipe (not the terminal).
+# Redirect Python's stdin from /dev/tty so the user can type.
+# This is safe: it redirects *only* Python's stdin, not the shell's.
+if [ -t 0 ]; then
+    # Already running interactively (e.g. ./install.sh)
+    "$VENV_DIR/bin/python" "$INSTALL_DIR/main.py"
+else
+    # Piped (e.g. curl | sh) — give Python the terminal directly
+    "$VENV_DIR/bin/python" "$INSTALL_DIR/main.py" </dev/tty
+fi
