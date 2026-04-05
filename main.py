@@ -12,7 +12,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from agent import tools, loop
 
-MODEL = os.environ.get("MATRIX_MODEL", "gemma4")
+MODEL = os.environ.get("MATRIX_MODEL", "gemma4:latest")
 TOOLS_DIR = str(Path(__file__).parent / "tools")
 
 BANNER = """

@@ -9,8 +9,9 @@ Each tool is a Python file in the tools/ directory exposing:
 import importlib.util
 import os
 from pathlib import Path
+from typing import Optional
 
-registry: dict[str, dict] = {}
+registry = {}
 
 _TOOLS_DIR = Path(__file__).parent.parent / "tools"
 
@@ -43,7 +44,7 @@ def load_tool(path: str) -> bool:
     return True
 
 
-def load_all(tools_dir: str | None = None) -> None:
+def load_all(tools_dir: Optional[str] = None) -> None:
     """Load all *.py files from the tools directory (skips __init__.py)."""
     directory = Path(tools_dir) if tools_dir else _TOOLS_DIR
     registry.clear()

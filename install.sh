@@ -13,7 +13,7 @@ set -e
 REPO_URL="https://github.com/laynr/matrix.py"
 RAW_BASE="https://raw.githubusercontent.com/laynr/matrix.py/main"
 INSTALL_DIR="${MATRIX_HOME:-$HOME/.matrix}"
-MODEL="${MATRIX_MODEL:-gemma4}"
+MODEL="${MATRIX_MODEL:-gemma4:latest}"
 VENV_DIR="$INSTALL_DIR/.venv"
 
 # Colors
